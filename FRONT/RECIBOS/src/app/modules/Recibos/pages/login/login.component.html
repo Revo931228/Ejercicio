@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <div class="text-center mt-4 name">Administración</div>
+  <div></div>
+  <div class="form-field d-flex align-items-center">
+    <span class="far fa-user"></span>
+    <input type="text" [(ngModel)]="idUsuario" placeholder="Id Usuario">
+  </div>
+  <div class="form-field d-flex align-items-center">
+    <span class="fas fa-key"></span>
+    <input type="password" [(ngModel)]="password"  placeholder="Constraseña">
+  </div>
+  <button class="btn mt-3" (click)="BuscarUsuarios()">Login</button>
+</div>

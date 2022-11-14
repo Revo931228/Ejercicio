@@ -1,0 +1,4 @@
+<select class="form-control form-control-sm" [(ngModel)]="IdTipoMovimientoValue" (change)="changeTipoMovimiento(IdTipoMovimientoValue)" [disabled]="Disable">
+  <option [ngValue]="0">Seleccionar...</option>
+  <option *ngFor="let item of this.ListaTiposMovimientos" [ngValue]="item.idTipoMovimiento">{{item.nombreMovimiento}}</option>
+</select>
