@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0665: La asignación en una expresión condicional siempre es constante
+dotnet_diagnostic.CS0665.severity = silent
