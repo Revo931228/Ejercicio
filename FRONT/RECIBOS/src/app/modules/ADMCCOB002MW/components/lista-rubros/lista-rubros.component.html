@@ -1,0 +1,3 @@
+<select class="form-control form-control-sm" [(ngModel)]="ClaveRubroValue" (change)="changeRubro(ClaveRubroValue)" [disabled]="true">
+  <option *ngFor="let item of this.ListaRubros" [ngValue]="item.claveRubro">{{item.descripcion}}</option>
+</select>

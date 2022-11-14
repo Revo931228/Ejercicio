@@ -1,0 +1,64 @@
+.contenedor {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cabecera {
+  background: #ffb240;
+  flex: 0.09;
+  color: white;
+  background-color: #ffb240;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.contenido {
+  flex: 1;
+}
+
+.Pie {
+  flex: 0;
+  background: #ffb240;
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.CentrarBoton{
+  padding-top: 1.9em;
+}
+
+/* Firefox */
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.vacios {
+  color: red;
+}
+
+.modal-xl {
+max-width:10%;
+}
+
+
+.labels {
+color: white;
+padding: 8px;
+}
+
+.danger {
+background-color: #f44336;
+}
+
+.estilo {
+  font-weight: bold;
+}

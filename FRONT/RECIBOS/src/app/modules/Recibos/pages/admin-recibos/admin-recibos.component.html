@@ -1,0 +1,124 @@
+<div class="contenedor">
+  <div class="contenido mt-2">
+    <div class="container-fluid" id="Contenido">
+      <div class="row mt-2">
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label>No. Recibo</label>
+          <input class="form-control form-control-sm" type="text" [(ngModel)]='FiltroRecibo' placeholder="No. Recibo" (change)="BuscarRecibos()" (keypress)="Valida($event)">
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 CentrarBoton">
+          <button class="btn btn-sm btn-primary" (click)="BuscarRecibos()"><i class="fa fa-search"></i> Buscar</button>
+        </div>
+        <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+          <button class="btn btn-link btn-sm float-right add-button" (click)="cerrarSesion()"> Cerrar Sesión</button>
+      </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+          <button class="btn btn-success btn-sm float-right add-button" (click)="openModalRecibos()"><i class="fa fa-plus" ></i> Agregar Recibo</button>
+      </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <grid-cs #grid [rowsPerPage]="5" [columnDefs]="columnGrid" [(data)]="objRecibos.lstRecibos" [enablePagination]="true"></grid-cs>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Pie">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 text-center">
+
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #mdlRecibos let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title"><i class="fa fa-plus"></i> AGREGAR RECIBO</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+          <div class="form-group">
+            <label><strong>Proveedor:</strong></label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control form-control-sm" readonly placeholder="Seleccionar Proveedor" [ngModel]="proveedorText">
+                <div class="input-group-append">
+                  <button class="btn btn-info btn-sm" type="button" (click)="openModalProveedores()">
+                      <i class="fas fa-search"></i>
+                  </button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label><strong>Monto:</strong></label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="objRecibos.monto" (keypress)="Valida($event)">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label><strong>Moneda</strong>:</label>
+          <select class="form-control form-control-sm" [(ngModel)]="objRecibos.idMoneda">
+            <option *ngFor="let obj of ltsMonedas" [ngValue]="obj.idMoneda">{{obj.nombreMoneda}}</option>
+        </select>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label><strong>Fecha</strong>:</label>
+          <!--<input class="form-control form-control-sm" type="date" [ngModel] ="objRecibos.fecha| date:'yyyy-MM-dd'" (ngModelChange)="CambiarFecha($event)">-->
+          <input class="form-control form-control-sm" type="date" [(ngModel)]="objRecibos.fecha">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <label><strong>Comentrios</strong>:</label>
+          <textarea class="form-control form-control-sm" [(ngModel)]="objRecibos.comentario"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm" (click)="modal.close()"><i class="fas fa-times"></i> Cancelar</button>
+      <button type="button" [ngClass]="accion == 1 ? 'btn btn-success btn-sm' : 'btn btn-warning btn-sm'" (click)="AccionesRecibos()"><i [ngClass]="accion == 1 ? 'fas fa-save' : 'fas fa-edit'"></i>{{accion == 1 ? ' Guardar' : ' Actualizar'}}</button>
+  </div>
+</ng-template>
+
+<ng-template #mdlProveedores let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title"><i class="fa fa-search"></i> BUSCAR PROVEEDORES</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+          <label>Id / Nombre Proveedor</label>
+          <input class="form-control form-control-sm" type="text" [(ngModel)]='FiltroProveedores' placeholder="Id / Nombre Proveedor" (change)="BuscarProveedores()">
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 CentrarBoton">
+          <button class="btn btn-sm btn-primary" (click)="BuscarProveedores()"><i class="fa fa-search"></i> Buscar</button>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <grid-cs #gridProveedores [rowsPerPage]="5" [columnDefs]="columnGridProveedor" [(data)]="ltsProveedores" [enablePagination]="true"></grid-cs>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm" (click)="modal.close()"><i class="fas fa-times"></i> Cancelar</button>
+  </div>
+</ng-template>
+

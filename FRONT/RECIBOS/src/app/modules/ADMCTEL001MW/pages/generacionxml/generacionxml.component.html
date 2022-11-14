@@ -1,0 +1,103 @@
+<div class="contenedor">
+  <div class="contenido mt-2">
+    <div class="container-fluid" id="Contenido">
+      <div class="row mt-2">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label>Tipo de Documento:</label>
+          <select class="form-control form-control-sm" [(ngModel)]="XML.TipoDocumento" (ngModelChange)="ActivarFiltrosPoliza($event)">
+            <option [value]="0">Seleccionar...</option>
+            <option *ngFor="let obj of ltsTiposDocumentos" [ngValue]="obj.claveDocumento">{{obj.nombreDocumento}}</option>
+          </select>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <label>Periodo Ejercicio:</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control form-control-sm" readonly placeholder="Seleccionar Periodo Ejercicio" [ngModel]="periodoText">
+              <div class="input-group-append">
+                <button class="btn btn-info btn-sm" type="button" (click)="openModal()"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <fieldset class="fieldset" [disabled]="!isEditableFiltroPilizas">
+            <legend>Filtros Póliza</legend>
+            <div class="row">
+              <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <label>Tipo de Solicitud:</label>
+                <select class="form-control form-control-sm" [(ngModel)]="XML.IdTipoSolicitud" (ngModelChange)="ActivarFiltrosSolicitud($event)">
+                  <option *ngFor="let obj of ltsTiposSolicitud" [ngValue]="obj.idTipoSolicitud">{{obj.clave}} - {{obj.descripcion}}</option>
+                </select>
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <label>Número de Orden:</label>
+                <input class="form form-control form-control-sm" [(ngModel)]="XML.NumeroOrden" [disabled]="!isEditableNumOrden">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <label>Número de Trámite:</label>
+                <input class="form form-control form-control-sm" maxlength="14" [(ngModel)]="XML.NumeroTramite" [disabled]="!isEditableNumTramite">
+              </div>
+            </div>
+            <div class="row mt-2"></div>
+          </fieldset>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-11 col-md-11 col-lg-11 col-xl-11">
+          <button class="btn btn-success btn-sm float-right add-button" (click)="GeneraXML()"><i class="fa fa-save"></i> Generar XML</button>
+        </div>
+        <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <button class="btn btn-danger btn-sm" (click)="LimpiarFiltros()"><i class="fa fa-trash"></i> Limpiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Pie">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 text-center">
+              <small> Generación de Documentos XML <i class="fa fa-code-branch"></i> 27.10.2022.1</small>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #mdlPeriodos let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title"><i class="fa fa-search"></i> Busca Periodos / Ejercicios</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+  </div>
+  <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+            <div class="form-group">
+              <label>Periodo / Ejercicio</label>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control form-control-sm" (keypress)="KeyPressBuscarPeriodo($event)" [(ngModel)]="filtro">
+                <div class="input-group-append">
+                  <button class="btn btn-primary btn-sm" type="button" (click)="BuscaPeriodos()"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <grid-cs #gridPeriodos [rowsPerPage]="5" [columnDefs]="columnGrid" [(data)]="ltsPeriodos"></grid-cs>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()"><i class="fas fa-undo"></i> Regresar</button>
+  </div>
+</ng-template>
+
+<block-ui></block-ui>

@@ -1,0 +1,707 @@
+<div class="contenedor">
+  <div class="contenido mt-2">
+    <div class="container-fluid" id="Contenido">
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="btn-group float-right" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-warning" (click)="openModalEditarMovimientos()"><i class="fa fa-edit"></i> Modificar Movimientos</button>
+            <button type="button" class="btn btn-danger" (click)="openModalEliminarPagos()"><i class="fa fa-times"></i> Eliminar Movimientos</button>
+            <button type="button" class="btn btn-success" (click)="openModalAplicar()"><i class="fa fa-plus"></i> Aplicar</button>
+            <button type="button" class="btn btn-danger" (click)="openModalDesAplicar()"><i class="fa fa-minus"></i> Desaplicar</button>
+          </div>
+        </div>
+        <!--<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <button class="btn btn-sm btn-warning" (click)="openModalEditarMovimientos()"><i class="fa fa-edit"></i> Modificar Movimientos</button>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <button class="btn btn-sm btn-danger" (click)="openModalEliminarPagos()"><i class="fa fa-times"></i> Eliminar Movimientos</button>
+        </div>
+        <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <button class="btn btn-sm btn-success" (click)="openModalAplicar()"><i class="fa fa-plus"></i> Aplicar</button>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <button class="btn btn-sm btn-danger" (click)="openModalDesAplicar()"><i class="fa fa-minus"></i> Desaplicar</button>
+        </div>-->
+      </div>
+      <div class="row mt-3">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label class="estilo">Tipo Movimientos</label>
+          <app-tipo-movimientos [(IdTipoMovimientoValue)]="idTipoMovimiento" (IdTipoMovimientoValueChange)="ChangeTipoMovimiento($event)" [Disable]="DisableTipoMovimiento"></app-tipo-movimientos>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label class="estilo">Cliente</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="clienteText" readonly placeholder="Seleccionar Cliente">
+            <div class="input-group-append">
+              <button class="btn btn-info btn-sm" type="button" (click)="openModalClientes()">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <fieldset class="fieldset">
+            <legend>Información del Depósito</legend>
+            <div class="row">
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                <label class="estilo">Depósito</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.cuentaBanco" readonly placeholder="" >
+                  <div class="input-group-append">
+                    <button class="btn btn-info btn-sm" type="button" (click)="openModalDepositos()"><i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3 col-md-3 col-lg-3">
+                <label class="estilo">Fecha</label>
+                <input class="form-control form-control-sm" type="date" [ngModel] ="FechaDeposito | date:'yyyy-MM-dd'" (ngModelChange)="FechaDeposito= $event" [disabled]="true">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Importe del Pago</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.importePagoDesposito" [disabled]="IsDisable">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Moneda</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.monedaDeposito" [disabled]="IsDisable">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Tipo Cambio</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.tipoCambioDeposito" [disabled]="IsDisable">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Importe M.N.</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.importeMNDeposito" [disabled]="IsDisable">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Saldo</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.saldoDeposito" [disabled]="IsDisable">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Saldo M.N.</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.saldoMNDeposito" [disabled]="IsDisable">
+              </div>
+            </div>
+            <div class="row mt-2"></div>
+          </fieldset>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <fieldset class="fieldset">
+            <legend>Información del Pago</legend>
+            <div class="row">
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Cuenta de Banco</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.cuentaBanco" [disabled]="IsDisable">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Moneda</label>
+                <app-lista-monedas [(IdMonedaValue)]="idTipoMoneda" (IdMonedaValueChange)="changeTipoMoneda($event)" [IdMonedaDisable]="false"></app-lista-monedas>
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Tipo Cambio</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.tipoCambioPago" (keypress)="isNumberType($event)">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Importe del Pago</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.importePago">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Importe en M.N.</label>
+
+
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.importeMNPago" [disabled]="IsDisable">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Repetitivo</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.repetitivo">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Fecha</label>
+                <input class="form-control form-control-sm" type="date" [ngModel] ="FechaPago | date:'yyyy-MM-dd'" (ngModelChange)="FechaPago= $event">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Fecha Ingreso</label>
+                <input class="form-control form-control-sm" type="date" [ngModel] ="FechaIngreso | date:'yyyy-MM-dd'" (ngModelChange)="FechaIngreso= $event">
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-4">
+                <label class="estilo">Cheque Cte.</label>
+                <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.cheque">
+              </div>
+            </div>
+            <div class="row mt-2"></div>
+          </fieldset>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <!--<button class="btn btn-success btn-sm float-left add-button" (click)="changeTipoCambio()"><i class="fa fa-edit"></i> Actualizar Póliza</button>-->
+        </div>
+      </div>
+      <div class="row mt-2" *ngIf="false">
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <mat-checkbox [(ngModel)]="chkFluctuacion">Fluctuación</mat-checkbox>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <input class="form-control form-control-sm" [(ngModel)]="txtRepFluct" placeholder="fluctuación">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <grid-cs #gridFacturas [rowsPerPage]="10" [columnDefs]="columnGridFacturas" [(data)]="ListaMovimientosCliente" [enablePagination]="true"></grid-cs>
+          <!--<mat-tab-group [selectedIndex]="tabSelected" (selectedIndexChange)="changeTab($event)" mat-align-tabs="center" animationDuration="300ms" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+            <mat-tab label="Facturas">
+              <grid-cs #gridFacturas [rowsPerPage]="10" [columnDefs]="columnGridFacturas" [(data)]="ListaMovimientosCliente" [enablePagination]="true"></grid-cs>
+            </mat-tab>
+            <mat-tab label="Pólizas">
+              <div class="row mt-1"></div>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <button class="btn btn-success btn-sm float-right add-button" (click)="openModalAgregarPoliza()"><i class="fa fa-plus"></i> Agregar Póliza</button>
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <grid-cs #gridPoliza [rowsPerPage]="10" [columnDefs]="columnGridPoliza" [(data)]="ListaPoliza.ListaPolizas" [enablePagination]="true"></grid-cs>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5"></div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                  <label class="estilo">Total Cargo:</label>
+                  <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.totalCargo" [disabled]="true">
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                  <label class="estilo">Total Abono:</label>
+                  <input class="form-control form-control-sm" [(ngModel)]="DatosPagosAnticipos.totalAbono" [disabled]="true">
+                </div>
+                <div class="row mt-2"></div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>-->
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button class="btn btn-success btn-sm float-right add-button" (click)="GuardarPoliza()"><i class="fa fa-save"></i> Guardar Pago</button>
+        </div>
+        <!--<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <button class="btn btn-secondary btn-sm float-right add-button" (click)="openModalSigma()"><i class="fa fa-calculator"></i></button>
+        </div>-->
+      </div>
+      <div class="row mt-2"></div>
+    </div>
+  </div>
+  <div class="Pie">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 text-center">
+                <h5>Versión 19.04.2022.1</h5>
+                <h5>ADMCCOB002MW - Pagos y Anticipos</h5>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'lg'" Titulo="Buscar Clientes"
+    [IconoTitulo]="'far fa-address-card'" #modalClientes>
+    <modal-clientes-prospectos #contModalClientes Tipo="clientes" (dataChange)="SeleccionarCliente($event);"
+        (cancel)="closeModalClientes()"></modal-clientes-prospectos>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'xl'" Titulo="Búsqueda de Depósitos Bancarios" [IconoTitulo]="'fa fa-search'" #modalDepositosBancarios>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label class="estilo">Rubro</label>
+          <app-lista-rubros [(ClaveRubroValue)]="claveRubro" (ClaveRubroValueChange)="ChangeClaveRubro($event)"></app-lista-rubros>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label class="estilo">Fecha Ini. Depósito</label>
+          <input class="form-control form-control-sm" type="date" [ngModel] ="FechaInicio | date:'yyyy-MM-dd'" (ngModelChange)="FechaInicio = $event">
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label class="estilo">Fecha Fin Depósito</label>
+          <input class="form-control form-control-sm" type="date" [ngModel] ="FechaFin | date:'yyyy-MM-dd'" (ngModelChange)="FechaFin = $event">
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 CentrarBoton">
+          <button class="btn btn-sm btn-primary" (click)="ListarDepositos()"><i class="fa fa-search"></i> Mostrar Depósitos</button>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 CentrarBoton">
+          <mat-checkbox [(ngModel)]="filtrosDep.todos">Todos</mat-checkbox>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 CentrarBoton">
+          <mat-checkbox [(ngModel)]="filtrosDep.todosPendientes" (change)="llenarListasParaFiltrarDepositos($event)">Todos Pendiente</mat-checkbox>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label class="estilo">Clientes</label>
+          <select class="form-control-sm form-control" [(ngModel)]="filtrosDep.idCliente" [disabled]="filtrosDep.todosPendientes">
+            <option *ngFor="let item of listaClientes" [ngValue]="item.idCliente">{{item.idCliente}} - {{item.NombreCliente}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label class="estilo">Dolares</label>
+          <select class="form-control-sm form-control" [disabled]="filtrosDep.todosPendientes">
+            <option *ngFor="let item of listaDolares" [ngValue]="item.dolares">{{item.dolares}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label class="estilo">Pesos</label>
+          <select class="form-control-sm form-control" [disabled]="filtrosDep.todosPendientes">
+            <option *ngFor="let item of listaPesos" [ngValue]="item.pesos">{{item.pesos}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label class="estilo">Cuenta Banco</label>
+          <select class="form-control-sm form-control" [disabled]="filtrosDep.todosPendientes">
+            <option *ngFor="let item of listaCuentaBanco" [ngValue]="item.numeroCuenta">{{item.numeroCuenta}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <label class="estilo">Referencia</label>
+          <select class="form-control-sm form-control" [disabled]="filtrosDep.todosPendientes">
+            <option *ngFor="let item of listaReferencias" [ngValue]="item.referencia">{{item.referencia}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <grid-cs #gridDepositos [rowsPerPage]="10" [columnDefs]="columnGridDepositosBancarios" [(data)]="ListaDepositos"></grid-cs>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModalDepositos()"><i class="fas fa-times"></i> Regresar</button>
+      <button type="button" class="btn btn-secondary btn-sm" ><i class="fas fa-book"></i> Imprimir</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'sm'" Titulo="Modificación Importe Factura" [IconoTitulo]="'fa fa-edit'" #modalModImporteFactura>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <label class="estilo">M.N.</label>
+          <input class="form form-control form-control-sm" [(ngModel)]="mdlFacturaImporteMN" [disabled]="mdlFacturaImporteMNIsDisable">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <label class="estilo">Dólares</label>
+          <input class="form form-control form-control-sm" [(ngModel)]="mdlFacturaDolares" [disabled]="mdlFacturaDolaresIsDisable">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <label class="estilo">Dólares</label>
+          <input class="form form-control form-control-sm" [(ngModel)]="mdlFacturaTipoCambio" [disabled]="mdlFacturaTipoCambioIsDisable">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm" (click)="AplicarModificacionFactura()"> <i class="fas fa-save"></i> Aplicar</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'lg'" Titulo="Agregar Póliza" [IconoTitulo]="'fa fa-plus'" #modalAgregarPoliza>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label class="estilo">No. Cuenta:</label>
+          <input class="form form-control form-control-sm" [(ngModel)]="datosCuenta.numeroCuenta" (change)="GetCuentaContable()">
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+          <label class="estilo">Cuenta:</label>
+          <input class="form form-control form-control-sm" [(ngModel)]="datosCuenta.nombreCuenta" [disabled]="true">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label class="estilo">Cargo:</label>
+          <input class="form form-control form-control-sm" [(ngModel)]="datosCuenta.cargo" (change)="DeshabilitarCargo()" [disabled]="!DisableCargo">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label class="estilo">Abono:</label>
+          <input class="form form-control form-control-sm" [(ngModel)]="datosCuenta.abono" (change)="DeshabilitarAbono()" [disabled]="!DisableAbono">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <label class="estilo">Concepto:</label>
+          <textarea class="form form-control form-control-sm" [(ngModel)]="datosCuenta.concepto"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm" (click)="AgregarPoliza()"> <i class="fas fa-save"></i> Aplicar</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModalAgregarPoliza()"> <i class="fas fa-times"></i> Cancelar</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'md'" Titulo="" [IconoTitulo]="" #modalSigma>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+
+        </div>
+        <div class="col-sm-4 col-md-5 col-lg-5 col-xl-5">
+          <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" class="estilo">Dólares</label>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm"  class="estilo" >M.N.</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Abono</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="LabAbono" [disabled]="true">
+            </div>
+            <div class="col-sm-5">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="LabMN0" [disabled]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Cargo</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="LabCargo" [disabled]="true">
+            </div>
+            <div class="col-sm-5">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="LabMN1" [disabled]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Diferencia</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="LabDif" [disabled]="true">
+            </div>
+            <div class="col-sm-5">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="LabMN2" [disabled]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModalSigma()"> <i class="fas fa-times"></i> Cerrar</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'sm'" Titulo="Cuentas de Excedentes" [IconoTitulo]="'fa fa-plus'" #modalCuentasExcedentes>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <label class="estilo">Seleccione la cuenta deseada:</label>
+          <select class="form form-control form-control-sm">
+            <option ngValue="0">Seleccionar...</option>
+            <option *ngFor="let obj of ltsCuentasExcendentes" [ngValue]="obj.clave">{{obj.definicion}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm"> <i class="fas fa-save"></i> Aceptar</button>
+      <button type="button" class="btn btn-danger btn-sm"> <i class="fas fa-times"></i> Cancelar</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'lg'" Titulo="Modificación de Movimientos" [IconoTitulo]="'fa fa-edit'" #modalModificacionMovimientos>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <fieldset class="fieldset">
+            <legend>Datos Generales</legend>
+            <div class="row">
+              <div class="col-sm-3 col-md-3 col-lg-3">
+                <label class="estilo">Documento</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="datosModificar.documento" (keydown.enter)="BuscarDocumentos()">
+                  <div class="input-group-append">
+                    <button class="btn btn-info btn-sm" type="button" (click)="BuscarDocumentos()">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-9 col-md-9 col-lg-9">
+                <label class="estilo">Tipo Cartera</label>
+                <input class="form-control form-control-sm" [disabled]="true" [(ngModel)]="datosModificar.nomTipoCartera">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Cliente</label>
+                <input class="form-control form-control-sm" [(ngModel)]="datosModificar.nomCliente" [disabled]="true">
+              </div>
+            </div>
+            <div class="row mt-2"></div>
+          </fieldset>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <fieldset class="fieldset">
+            <legend>Datos del Pago</legend>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Fecha:</label>
+                <input class="form-control form-control-sm" type="date" [ngModel] ="datosModificar.fecha | date:'yyyy-MM-dd'" (ngModelChange)="datosModificar.fecha= $event" [disabled]="true">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Importe del Pago:</label>
+                <input class="form-control form-control-sm" (change)="Importes($event)" [(ngModel)]="datosModificar.importe">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Importe del M.N.:</label>
+                <input class="form-control form-control-sm" [(ngModel)]="datosModificar.importeMN" disabled>
+              </div>
+            </div>
+            <div class="row mt-2"></div>
+          </fieldset>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <fieldset class="fieldset">
+            <legend>Datos del Banco</legend>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Cuenta Banco:</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="datosModificar.cuentaBanco">
+                  <div class="input-group-append">
+                    <button class="btn btn-info btn-sm" type="button" (click)="ModChangeCuentaBanco()">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Moneda:</label>
+                <app-lista-monedas [(IdMonedaValue)]="datosModificar.moneda" (IdMonedaValueChange)="changeTipoMoneda($event)" [IdMonedaDisable]="true"></app-lista-monedas>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Tipo Cambio:</label>
+                <input class="form-control form-control-sm"  [(ngModel)]="datosModificar.tipoCambio">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label class="estilo">Cheque Cte.</label>
+                <input class="form-control form-control-sm"  [(ngModel)]="datosModificar.cheque">
+              </div>
+            </div>
+            <div class="row mt-2"></div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm" (click)="ModificarMovimientos()"> <i class="fas fa-edit"></i> Aceptar</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModalEditarMovimientos()"> <i class="fas fa-times"></i> Cancelar</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'lg'" Titulo=" Eliminar Movimientos" [IconoTitulo]="'fa fa-times'" #modalEliminarPagos>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label class="estilo">Documento</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="" (keydown.enter)="BuscarDocumentoEliminar()" [(ngModel)]="datosModificar.documento" >
+            <div class="input-group-append">
+              <button class="btn btn-info btn-sm" type="button" (click)="BuscarDocumentoEliminar()"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-3">
+          <label class="estilo">Moneda</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="true" [(ngModel)]="datosModificar.nombreMoneda">
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label type="date" class="estilo">Fecha</label>
+          <input class="form-control form-control-sm" [disabled]="true" [(ngModel)]="datosModificar.fecha">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <label class="estilo">Cliente</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="true" [(ngModel)]="datosModificar.nomCliente">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label class="estilo">Importe Pago</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="true" [(ngModel)]="datosModificar.importe">
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label class="estilo">Importe del Abono</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="true" [(ngModel)]="datosModificar.cfdiPagos">
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label class="estilo">Tipo Cartera</label>
+            <input type="text" class="form-control form-control-sm" [disabled]="true" [(ngModel)]="datosModificar.nomTipoCartera">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm" (click)="EliminarPagos()"> <i class="fas fa-save"></i> Eliminar Movimiento</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModalEliminarPagos()"> <i class="fas fa-times"></i> Regresar</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'xl'" Titulo=" Aplicación de Movimientos" [IconoTitulo]="'fa fa-plus'" #modalAplicar>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label class="estilo">Documento</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" (keydown.enter)="GetDocumentosAplicar(true)" [(ngModel)]="DatosAplicar.folioPago">
+            <div class="input-group-append">
+              <button class="btn btn-info btn-sm" type="button" (click)="GetDocumentosAplicar(true)"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-3">
+          <label class="estilo">Moneda</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.nombreMoneda" [disabled]="true">
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label type="date" class="estilo">Fecha</label>
+          <input class="form-control form-control-sm" [(ngModel)]="DatosAplicar.fecha" [disabled]="true">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <label class="estilo">Cliente</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.nombreCliente" [disabled]="true">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <label class="estilo">Importe del Abono</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.importeAbono" [disabled]="true">
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <label class="estilo">Tipo de Cambio</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.tipoCambio" [disabled]="true">
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8">
+          <label class="estilo">Tipo Cartera</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.nombreTipoCartera" [disabled]="true">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <grid-cs #gridFacturasAplicar [rowsPerPage]="10" [columnDefs]="columnGridFacturasAplicar" [(data)]="ListaMovimientosCliente" [enablePagination]="true"></grid-cs>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm" (click)="AplicarPagos()"> <i class="fas fa-edit"></i> Aceptar</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModalAplicar()"> <i class="fas fa-times"></i> Cancelar</button>
+  </div>
+</ng-modal>
+
+<ng-modal [MostrarbtnAceptar]="true" [Size]="'xl'" Titulo=" Desaplicación de Movimientos" [IconoTitulo]="'fa fa-minus'" #modalDesAplicar>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label class="estilo">Documento</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="" (keydown.enter)="GetDocumentosDesAplicar()" [(ngModel)]="DatosAplicar.folioPago">
+            <div class="input-group-append">
+              <button class="btn btn-info btn-sm" type="button" (click)="GetDocumentosDesAplicar()"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-3">
+          <label class="estilo">Moneda</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.nombreMoneda" [disabled]="true">
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label type="date" class="estilo">Fecha</label>
+          <input class="form-control form-control-sm" [(ngModel)]="DatosAplicar.fecha" [disabled]="true">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <label class="estilo">Cliente</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.nombreCliente" [disabled]="true">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <label class="estilo">Importe del Abono</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.importeAbono" [disabled]="true">
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <label class="estilo">Tipo de Cambio</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.tipoCambio" [disabled]="true">
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8">
+          <label class="estilo">Tipo Cartera</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="DatosAplicar.nombreTipoCartera" [disabled]="true">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <grid-cs #gridFacturas [rowsPerPage]="10" [columnDefs]="columnGridFacturas" [(data)]="ListaMovimientosCliente" [enablePagination]="true"></grid-cs>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm" (click)="DesaplicarMovimientos()" ><i class="fas fa-edit"></i> Aceptar</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModalDesAplicar()"> <i class="fas fa-times"></i> Cancelar</button>
+  </div>
+</ng-modal>
+
+
+<block-ui></block-ui>

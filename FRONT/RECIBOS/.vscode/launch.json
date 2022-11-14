@@ -1,0 +1,58 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch index.html",
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "file": "${workspaceFolder}/index.html"
+        },
+        {
+            "name": "Launch localhost",
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost/index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Attach",
+            "type": "firefox",
+            "request": "attach"
+        },
+        {
+            "name": "Launch WebExtension",
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "addonPath": "${workspaceFolder}"
+        },
+        {
+          "name": "Generacion XML",
+          "request": "launch",
+          "type": "firefox",
+          "url": "http://localhost:4200/auth/admctel001mw/generacionxml?pUsuario=012810&pZona=01",
+          "webRoot": "${workspaceFolder}"
+        },
+        {
+          "name": "Recibos",
+          "request": "launch",
+          "type": "firefox",
+          "url": "http://localhost:4200/auth/recibos/administracion?pUsuario=012810&pZona=01",
+          "webRoot": "${workspaceFolder}"
+        },
+        {
+          "name": "login",
+          "request": "launch",
+          "type": "firefox",
+          "url": "http://localhost:4200/recibos/login",
+          "webRoot": "${workspaceFolder}"
+        }
+
+
+    ]
+}
